@@ -1,36 +1,121 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🍳 Pakistani Recipe Finder + Kitchen AI
 
-## Getting Started
+A modern and responsive recipe discovery web application built with Next.js and TypeScript.
 
-First, run the development server:
+The application allows users to search for recipes, view detailed cooking instructions, save favorite recipes, switch between English and Urdu, and get AI-powered cooking assistance through Kitchen AI.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Live Demo
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+https://recipe-finder-flame-tau.vercel.app/
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 📸 Features
 
-To learn more about Next.js, take a look at the following resources:
+### 🔎 Recipe Search
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Search for recipes using ingredients or dish names such as:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Biryani
+- Chicken
+- Karahi
+- Pasta
+- Pizza
 
-## Deploy on Vercel
+Recipe data is fetched from TheMealDB API.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 🍽️ Recipe Details
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Each recipe provides:
+
+- Recipe image
+- Category
+- Cuisine
+- Ingredients
+- Measurements
+- Cooking instructions
+
+### ❤️ Favorites
+
+Users can save their favorite recipes.
+
+Favorites are stored locally using browser LocalStorage, so they remain available after refreshing the page.
+
+### 🇬🇧 English & 🇵🇰 Urdu
+
+The application supports:
+
+- English
+- Urdu
+
+Recipes can be translated into Urdu using the application's AI translation functionality.
+
+### 🤖 Kitchen AI
+
+The built-in Kitchen AI assistant can help users with:
+
+- Creating recipes from available ingredients
+- Ingredient substitutions
+- Cooking questions
+- Recipe adjustments
+- Cooking problems
+- General cooking guidance
+
+### 📱 Responsive Design
+
+The application is designed to work across:
+
+- Desktop
+- Laptop
+- Tablet
+- Mobile devices
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+
+### APIs & AI
+
+- TheMealDB API
+- Gemini AI
+
+### Browser Storage
+
+- LocalStorage
+
+### Deployment
+
+- Vercel
+
+---
+
+## 📂 Project Structure
+
+```text
+recipe-finder/
+│
+├── app/
+│   ├── api/
+│   │   └── translate/
+│   ├── page.tsx
+│   ├── layout.tsx
+│   └── globals.css
+│
+├── components/
+│   └── AIChatbot.tsx
+│
+├── public/
+│
+├── package.json
+├── tsconfig.json
+├── next.config.ts
+└── README.md
