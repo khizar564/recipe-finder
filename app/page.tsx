@@ -19,37 +19,46 @@ type MealDetails = Meal & {
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
   const [meals, setMeals] = useState<Meal[]>([]);
-  const [selectedMeal, setSelectedMeal] = useState<MealDetails | null>(null);
+  const [selectedMeal, setSelectedMeal] =
+    useState<MealDetails | null>(null);
 
   const [loading, setLoading] = useState(false);
-  const [detailsLoading, setDetailsLoading] = useState(false);
+  const [detailsLoading, setDetailsLoading] =
+    useState(false);
 
-  const [language, setLanguage] = useState<"en" | "ur">("en");
+  const [language, setLanguage] =
+    useState<"en" | "ur">("en");
 
   const [translatedMeal, setTranslatedMeal] =
     useState<MealDetails | null>(null);
 
-  const [translationLoading, setTranslationLoading] = useState(false);
+  const [translationLoading, setTranslationLoading] =
+    useState(false);
 
   // ================= FAVORITES =================
 
-  const [favorites, setFavorites] = useState<Meal[]>([]);
-  const [showFavorites, setShowFavorites] = useState(false);
+  const [favorites, setFavorites] =
+    useState<Meal[]>([]);
 
-  // Load favorites from localStorage
+  const [showFavorites, setShowFavorites] =
+    useState(false);
+
   useEffect(() => {
-    const savedFavorites = localStorage.getItem("recipeFavorites");
+    const savedFavorites =
+      localStorage.getItem("recipeFavorites");
 
     if (savedFavorites) {
       try {
         setFavorites(JSON.parse(savedFavorites));
       } catch (error) {
-        console.error("Failed to load favorites:", error);
+        console.error(
+          "Failed to load favorites:",
+          error,
+        );
       }
     }
   }, []);
 
-  // Save favorites to localStorage
   useEffect(() => {
     localStorage.setItem(
       "recipeFavorites",
@@ -57,14 +66,12 @@ export default function Home() {
     );
   }, [favorites]);
 
-  // Check favorite
   function isFavorite(id: string) {
     return favorites.some(
       (meal) => meal.idMeal === id,
     );
   }
 
-  // Add / remove favorite
   function toggleFavorite(meal: Meal) {
     setFavorites((currentFavorites) => {
       const exists = currentFavorites.some(
@@ -103,14 +110,20 @@ export default function Home() {
       );
 
       if (!response.ok) {
-        throw new Error("Failed to fetch recipes");
+        throw new Error(
+          "Failed to fetch recipes",
+        );
       }
 
       const data = await response.json();
 
       setMeals(data.meals || []);
     } catch (error) {
-      console.error("Error fetching recipes:", error);
+      console.error(
+        "Error fetching recipes:",
+        error,
+      );
+
       setMeals([]);
     } finally {
       setLoading(false);
@@ -130,7 +143,9 @@ export default function Home() {
       );
 
       if (!response.ok) {
-        throw new Error("Failed to fetch recipe details");
+        throw new Error(
+          "Failed to fetch recipe details",
+        );
       }
 
       const data = await response.json();
@@ -157,7 +172,9 @@ export default function Home() {
 
   // ================= TRANSLATION =================
 
-  async function translateRecipe(recipe: MealDetails) {
+  async function translateRecipe(
+    recipe: MealDetails,
+  ) {
     setTranslationLoading(true);
 
     try {
@@ -185,7 +202,8 @@ export default function Home() {
         {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type":
+              "application/json",
           },
           body: JSON.stringify({
             texts,
@@ -306,17 +324,42 @@ export default function Home() {
           ? "rtl"
           : "ltr"
       }
-      className="min-h-screen bg-gray-50"
+      className="min-h-screen overflow-x-hidden bg-gray-50"
     >
+
       {/* ================= HEADER ================= */}
 
       <header className="border-b bg-white">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
+        <div
+          className="
+            mx-auto
+            flex
+            max-w-6xl
+            flex-col
+            gap-4
+            px-4
+            py-4
+            sm:px-6
+            lg:flex-row
+            lg:items-center
+            lg:justify-between
+          "
+        >
+
           {/* LOGO */}
 
           <button
             onClick={goHome}
-            className="text-left text-2xl font-bold text-gray-900"
+            className="
+              w-full
+              text-center
+              text-xl
+              font-bold
+              text-gray-900
+              sm:text-2xl
+              lg:w-auto
+              lg:text-left
+            "
           >
             🇵🇰{" "}
             {language === "ur"
@@ -326,18 +369,40 @@ export default function Home() {
 
           {/* HEADER CONTROLS */}
 
-          <div className="flex flex-wrap items-center justify-end gap-2">
+          <div
+            className="
+              flex
+              w-full
+              flex-wrap
+              items-center
+              justify-center
+              gap-2
+              sm:justify-end
+              lg:w-auto
+            "
+          >
+
             {/* FAVORITES */}
 
             <button
               onClick={
                 toggleFavoritesPage
               }
-              className={`rounded-lg px-4 py-2 font-medium transition ${
-                showFavorites
-                  ? "bg-black text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
+              className={`
+                rounded-lg
+                px-3
+                py-2
+                text-sm
+                font-medium
+                transition
+                sm:px-4
+                sm:text-base
+                ${
+                  showFavorites
+                    ? "bg-black text-white"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                }
+              `}
             >
               ❤️{" "}
               {language === "ur"
@@ -352,11 +417,20 @@ export default function Home() {
               onClick={() =>
                 changeLanguage("en")
               }
-              className={`rounded-lg px-4 py-2 transition ${
-                language === "en"
-                  ? "bg-black text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
+              className={`
+                rounded-lg
+                px-3
+                py-2
+                text-sm
+                transition
+                sm:px-4
+                sm:text-base
+                ${
+                  language === "en"
+                    ? "bg-black text-white"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                }
+              `}
             >
               🇬🇧 English
             </button>
@@ -367,11 +441,20 @@ export default function Home() {
               onClick={() =>
                 changeLanguage("ur")
               }
-              className={`rounded-lg px-4 py-2 transition ${
-                language === "ur"
-                  ? "bg-black text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
+              className={`
+                rounded-lg
+                px-3
+                py-2
+                text-sm
+                transition
+                sm:px-4
+                sm:text-base
+                ${
+                  language === "ur"
+                    ? "bg-black text-white"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                }
+              `}
             >
               🇵🇰 اردو
             </button>
@@ -383,14 +466,43 @@ export default function Home() {
 
       {!showFavorites &&
         !selectedMeal && (
-          <section className="mx-auto max-w-6xl px-6 py-16 text-center">
-            <h2 className="text-4xl font-bold text-gray-900 md:text-5xl">
+          <section
+            className="
+              mx-auto
+              max-w-6xl
+              px-4
+              py-12
+              text-center
+              sm:px-6
+              sm:py-16
+            "
+          >
+            <h2
+              className="
+                text-3xl
+                font-bold
+                leading-tight
+                text-gray-900
+                sm:text-4xl
+                md:text-5xl
+              "
+            >
               {language === "ur"
                 ? "اپنی پسندیدہ ریسپی تلاش کریں"
                 : "Find Your Favorite Recipe"}
             </h2>
 
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
+            <p
+              className="
+                mx-auto
+                mt-4
+                max-w-2xl
+                text-base
+                leading-7
+                text-gray-600
+                sm:text-lg
+              "
+            >
               {language === "ur"
                 ? "مزیدار کھانے تلاش کریں اور آج کچھ نیا پکائیں۔"
                 : "Search recipes and discover something amazing to cook today."}
@@ -398,7 +510,18 @@ export default function Home() {
 
             {/* SEARCH BOX */}
 
-            <div className="mx-auto mt-8 flex max-w-2xl gap-3">
+            <div
+              className="
+                mx-auto
+                mt-8
+                flex
+                w-full
+                max-w-2xl
+                flex-col
+                gap-3
+                sm:flex-row
+              "
+            >
               <input
                 type="text"
                 placeholder={
@@ -417,12 +540,34 @@ export default function Home() {
                     handleSearch();
                   }
                 }}
-                className="flex-1 rounded-xl border border-gray-300 bg-white px-5 py-3 outline-none focus:border-gray-500"
+                className="
+                  min-w-0
+                  w-full
+                  rounded-xl
+                  border
+                  border-gray-300
+                  bg-white
+                  px-5
+                  py-3
+                  outline-none
+                  focus:border-gray-500
+                "
               />
 
               <button
                 onClick={handleSearch}
-                className="rounded-xl bg-black px-6 py-3 font-medium text-white transition hover:bg-gray-800"
+                className="
+                  w-full
+                  rounded-xl
+                  bg-black
+                  px-6
+                  py-3
+                  font-medium
+                  text-white
+                  transition
+                  hover:bg-gray-800
+                  sm:w-auto
+                "
               >
                 🔍{" "}
                 {language === "ur"
@@ -457,9 +602,28 @@ export default function Home() {
       {/* ================= FAVORITES PAGE ================= */}
 
       {showFavorites && (
-        <section className="mx-auto max-w-6xl px-6 py-12">
-          <div className="mb-8 flex items-center justify-between">
-            <h2 className="text-3xl font-bold text-gray-900">
+        <section
+          className="
+            mx-auto
+            max-w-6xl
+            px-4
+            py-8
+            sm:px-6
+            sm:py-12
+          "
+        >
+          <div
+            className="
+              mb-8
+              flex
+              flex-col
+              gap-4
+              sm:flex-row
+              sm:items-center
+              sm:justify-between
+            "
+          >
+            <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
               ❤️{" "}
               {language === "ur"
                 ? "میری پسندیدہ ریسپیز"
@@ -470,7 +634,18 @@ export default function Home() {
               onClick={() =>
                 setShowFavorites(false)
               }
-              className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-700 hover:bg-gray-100"
+              className="
+                w-full
+                rounded-lg
+                border
+                border-gray-300
+                bg-white
+                px-4
+                py-2
+                text-gray-700
+                hover:bg-gray-100
+                sm:w-auto
+              "
             >
               ←{" "}
               {language === "ur"
@@ -480,7 +655,7 @@ export default function Home() {
           </div>
 
           {favorites.length === 0 ? (
-            <div className="rounded-2xl bg-white p-10 text-center shadow-sm">
+            <div className="rounded-2xl bg-white p-8 text-center shadow-sm sm:p-10">
               <div className="text-5xl">
                 🤍
               </div>
@@ -492,19 +667,41 @@ export default function Home() {
               </p>
             </div>
           ) : (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div
+              className="
+                grid
+                grid-cols-1
+                gap-6
+                sm:grid-cols-2
+                lg:grid-cols-3
+              "
+            >
               {favorites.map(
                 (meal) => (
                   <div
                     key={meal.idMeal}
-                    className="overflow-hidden rounded-2xl bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+                    className="
+                      overflow-hidden
+                      rounded-2xl
+                      bg-white
+                      shadow-sm
+                      transition
+                      hover:-translate-y-1
+                      hover:shadow-md
+                    "
                   >
                     <img
                       src={
                         meal.strMealThumb
                       }
-                      alt={meal.strMeal}
-                      className="h-52 w-full object-cover"
+                      alt={
+                        meal.strMeal
+                      }
+                      className="
+                        h-52
+                        w-full
+                        object-cover
+                      "
                     />
 
                     <div className="p-5">
@@ -519,7 +716,15 @@ export default function Home() {
                               meal.idMeal,
                             )
                           }
-                          className="flex-1 rounded-lg bg-black py-2 text-white hover:bg-gray-800"
+                          className="
+                            min-w-0
+                            flex-1
+                            rounded-lg
+                            bg-black
+                            py-2
+                            text-white
+                            hover:bg-gray-800
+                          "
                         >
                           {language ===
                           "ur"
@@ -533,7 +738,15 @@ export default function Home() {
                               meal,
                             )
                           }
-                          className="rounded-lg border border-red-200 px-4 py-2 text-red-500 hover:bg-red-50"
+                          className="
+                            rounded-lg
+                            border
+                            border-red-200
+                            px-4
+                            py-2
+                            text-red-500
+                            hover:bg-red-50
+                          "
                         >
                           ❤️
                         </button>
@@ -550,7 +763,7 @@ export default function Home() {
       {/* ================= DETAILS LOADING ================= */}
 
       {detailsLoading && (
-        <section className="mx-auto max-w-6xl px-6 py-16 text-center">
+        <section className="mx-auto max-w-6xl px-4 py-16 text-center sm:px-6">
           <p className="text-lg text-gray-600">
             {language === "ur"
               ? "🔄 ریسپی کی تفصیلات لوڈ ہو رہی ہیں..."
@@ -564,7 +777,16 @@ export default function Home() {
       {displayedMeal &&
         !detailsLoading &&
         !showFavorites && (
-          <section className="mx-auto max-w-4xl px-6 pb-16">
+          <section
+            className="
+              mx-auto
+              max-w-4xl
+              px-4
+              pb-12
+              sm:px-6
+              sm:pb-16
+            "
+          >
             {/* BACK */}
 
             <button
@@ -572,7 +794,19 @@ export default function Home() {
                 setSelectedMeal(null);
                 setTranslatedMeal(null);
               }}
-              className="mb-6 rounded-lg border border-gray-300 bg-white px-5 py-2 text-gray-700 hover:bg-gray-100"
+              className="
+                mb-6
+                w-full
+                rounded-lg
+                border
+                border-gray-300
+                bg-white
+                px-5
+                py-2
+                text-gray-700
+                hover:bg-gray-100
+                sm:w-auto
+              "
             >
               ←{" "}
               {language === "ur"
@@ -592,6 +826,7 @@ export default function Home() {
             )}
 
             <div className="overflow-hidden rounded-2xl bg-white shadow-md">
+
               {/* IMAGE */}
 
               <img
@@ -601,14 +836,45 @@ export default function Home() {
                 alt={
                   displayedMeal.strMeal
                 }
-                className="h-80 w-full object-cover"
+                className="
+                  h-56
+                  w-full
+                  object-cover
+                  sm:h-72
+                  md:h-80
+                "
               />
 
-              <div className="p-8">
+              <div
+                className="
+                  p-5
+                  sm:p-8
+                "
+              >
+
                 {/* TITLE + FAVORITE */}
 
-                <div className="flex items-start justify-between gap-4">
-                  <h2 className="text-3xl font-bold text-gray-900">
+                <div
+                  className="
+                    flex
+                    flex-col
+                    gap-4
+                    sm:flex-row
+                    sm:items-start
+                    sm:justify-between
+                  "
+                >
+                  <h2
+                    className="
+                      min-w-0
+                      break-words
+                      text-2xl
+                      font-bold
+                      leading-tight
+                      text-gray-900
+                      sm:text-3xl
+                    "
+                  >
                     {
                       displayedMeal.strMeal
                     }
@@ -619,20 +885,32 @@ export default function Home() {
                       toggleFavorite({
                         idMeal:
                           displayedMeal.idMeal,
+
                         strMeal:
                           selectedMeal?.strMeal ||
                           displayedMeal.strMeal,
+
                         strMealThumb:
                           displayedMeal.strMealThumb,
                       })
                     }
-                    className={`shrink-0 rounded-xl px-4 py-2 font-medium transition ${
-                      isFavorite(
-                        displayedMeal.idMeal,
-                      )
-                        ? "bg-red-500 text-white"
-                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                    }`}
+                    className={`
+                      w-full
+                      shrink-0
+                      rounded-xl
+                      px-4
+                      py-2
+                      font-medium
+                      transition
+                      sm:w-auto
+                      ${
+                        isFavorite(
+                          displayedMeal.idMeal,
+                        )
+                          ? "bg-red-500 text-white"
+                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      }
+                    `}
                   >
                     {isFavorite(
                       displayedMeal.idMeal,
@@ -647,15 +925,22 @@ export default function Home() {
 
                 {/* CATEGORY + CUISINE */}
 
-                <div className="mt-4 flex flex-wrap gap-3">
-                  <span className="rounded-full bg-gray-100 px-4 py-2 text-sm text-gray-700">
+                <div
+                  className="
+                    mt-4
+                    flex
+                    flex-wrap
+                    gap-2
+                  "
+                >
+                  <span className="max-w-full break-words rounded-full bg-gray-100 px-4 py-2 text-sm text-gray-700">
                     🍽️{" "}
                     {language === "ur"
                       ? `قسم: ${displayedMeal.strCategory}`
                       : `Category: ${displayedMeal.strCategory}`}
                   </span>
 
-                  <span className="rounded-full bg-gray-100 px-4 py-2 text-sm text-gray-700">
+                  <span className="max-w-full break-words rounded-full bg-gray-100 px-4 py-2 text-sm text-gray-700">
                     🌍{" "}
                     {language === "ur"
                       ? `ملک: ${displayedMeal.strArea}`
@@ -665,7 +950,7 @@ export default function Home() {
 
                 {/* INGREDIENTS */}
 
-                <h3 className="mt-8 text-2xl font-bold text-gray-900">
+                <h3 className="mt-8 text-xl font-bold text-gray-900 sm:text-2xl">
                   🥘{" "}
                   {language === "ur"
                     ? "اجزاء"
@@ -702,7 +987,14 @@ export default function Home() {
                       return (
                         <li
                           key={index}
-                          className="rounded-lg bg-gray-50 px-4 py-3 text-gray-700"
+                          className="
+                            break-words
+                            rounded-lg
+                            bg-gray-50
+                            px-4
+                            py-3
+                            text-gray-700
+                          "
                         >
                           <span className="font-medium">
                             {measure}
@@ -716,14 +1008,24 @@ export default function Home() {
 
                 {/* INSTRUCTIONS */}
 
-                <h3 className="mt-10 text-2xl font-bold text-gray-900">
+                <h3 className="mt-10 text-xl font-bold text-gray-900 sm:text-2xl">
                   👨‍🍳{" "}
                   {language === "ur"
                     ? "پکانے کا طریقہ"
                     : "Cooking Instructions"}
                 </h3>
 
-                <p className="mt-4 whitespace-pre-line leading-8 text-gray-700">
+                <p
+                  className="
+                    mt-4
+                    break-words
+                    whitespace-pre-line
+                    text-base
+                    leading-7
+                    text-gray-700
+                    sm:leading-8
+                  "
+                >
                   {
                     displayedMeal.strInstructions
                   }
@@ -738,8 +1040,17 @@ export default function Home() {
       {!selectedMeal &&
         !detailsLoading &&
         !showFavorites && (
-          <section className="mx-auto max-w-6xl px-6 pb-16">
-            <h3 className="mb-6 text-2xl font-semibold text-gray-900">
+          <section
+            className="
+              mx-auto
+              max-w-6xl
+              px-4
+              pb-12
+              sm:px-6
+              sm:pb-16
+            "
+          >
+            <h3 className="mb-6 text-xl font-semibold text-gray-900 sm:text-2xl">
               {language === "ur"
                 ? "تلاش کے نتائج"
                 : "Search Results"}
@@ -750,8 +1061,8 @@ export default function Home() {
             {!loading &&
               meals.length === 0 &&
               searchTerm && (
-                <div className="rounded-2xl bg-white p-10 text-center shadow-sm">
-                  <p className="text-gray-500">
+                <div className="rounded-2xl bg-white p-8 text-center shadow-sm sm:p-10">
+                  <p className="break-words text-gray-500">
                     {language === "ur"
                       ? `"${searchTerm}" کے لیے کوئی ریسپی نہیں ملی۔`
                       : `No recipe found for "${searchTerm}".`}
@@ -761,24 +1072,54 @@ export default function Home() {
 
             {/* RECIPE CARDS */}
 
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div
+              className="
+                grid
+                grid-cols-1
+                gap-6
+                sm:grid-cols-2
+                lg:grid-cols-3
+              "
+            >
               {meals.map(
                 (meal) => (
                   <div
                     key={meal.idMeal}
-                    className="overflow-hidden rounded-2xl bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+                    className="
+                      overflow-hidden
+                      rounded-2xl
+                      bg-white
+                      shadow-sm
+                      transition
+                      hover:-translate-y-1
+                      hover:shadow-md
+                    "
                   >
                     <img
                       src={
                         meal.strMealThumb
                       }
                       alt={meal.strMeal}
-                      className="h-52 w-full object-cover"
+                      className="
+                        h-52
+                        w-full
+                        object-cover
+                      "
                     />
 
                     <div className="p-5">
-                      <div className="flex items-start justify-between gap-3">
-                        <h4 className="text-lg font-semibold text-gray-900">
+
+                      <div className="flex items-start gap-3">
+                        <h4
+                          className="
+                            min-w-0
+                            flex-1
+                            break-words
+                            text-lg
+                            font-semibold
+                            text-gray-900
+                          "
+                        >
                           {meal.strMeal}
                         </h4>
 
@@ -790,7 +1131,12 @@ export default function Home() {
                               meal,
                             )
                           }
-                          className="shrink-0 text-2xl transition hover:scale-110"
+                          className="
+                            shrink-0
+                            text-2xl
+                            transition
+                            hover:scale-110
+                          "
                           title={
                             isFavorite(
                               meal.idMeal,
@@ -815,7 +1161,16 @@ export default function Home() {
                             meal.idMeal,
                           )
                         }
-                        className="mt-4 w-full rounded-lg bg-black py-2 text-white transition hover:bg-gray-800"
+                        className="
+                          mt-4
+                          w-full
+                          rounded-lg
+                          bg-black
+                          py-2
+                          text-white
+                          transition
+                          hover:bg-gray-800
+                        "
                       >
                         {language ===
                         "ur"
