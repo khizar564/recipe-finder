@@ -149,6 +149,10 @@ recipe-finder/
 ├── next.config.ts
 └── README.md
 
+
+```
+
+
 Getting Started
 1. Clone the repository
 git clone https://github.com/khizar564/recipe-finder.git
@@ -157,15 +161,7 @@ cd recipe-finder
 3. Install dependencies
 npm install
 4. Configure environment variables
-
 Create a .env.local file in the project root.
-
-Add your Gemini API key:
-
-GEMINI_API_KEY=your_api_key_here
-
-⚠️ Never commit your API key to GitHub.
-
 5. Start the development server
 npm run dev
 
