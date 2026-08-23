@@ -148,3 +148,46 @@ recipe-finder/
 ├── tsconfig.json
 ├── next.config.ts
 └── README.md
+
+Getting Started
+1. Clone the repository
+git clone https://github.com/khizar564/recipe-finder.git
+2. Navigate into the project
+cd recipe-finder
+3. Install dependencies
+npm install
+4. Configure environment variables
+
+Create a .env.local file in the project root.
+
+Add your Gemini API key:
+
+GEMINI_API_KEY=your_api_key_here
+
+⚠️ Never commit your API key to GitHub.
+
+5. Start the development server
+npm run dev
+
+Open:
+
+http://localhost:3000
+
+🌐 Deployment
+
+The application is deployed using Vercel.
+
+Live Demo:
+https://recipe-finder-flame-tau.vercel.app/
+
+👨‍💻 Author
+Abbas Khizar
+
+Computer Science Student & Aspiring Full Stack Web Developer
+
+GitHub:
+https://github.com/khizar564
+
+📄 License
+
+This project was created for learning, portfolio development, and educational purposes
